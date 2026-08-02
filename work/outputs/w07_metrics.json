@@ -1,1 +1,25 @@
-g
+{
+  "week5_random_split_precision_at_50": {
+    "baseline": 0.52,
+    "model": 0.88
+  },
+  "week6_grouped_split_precision_at_50": {
+    "baseline_mean_20_splits": 0.531,
+    "model_mean_20_splits": 0.761,
+    "model_std_20_splits": 0.147
+  },
+  "week7_decay_refresh_insight": {
+    "staleness_alone_decline_rate": 0.471,
+    "staleness_alone_n": 174,
+    "model_high_confidence_decline_rate": 0.876,
+    "model_high_confidence_n": 5484,
+    "both_combined_decline_rate": 0.938,
+    "both_combined_n": 16
+  },
+  "reason_code_counts": {
+    "monitor_only": 17105,
+    "low_ctr_visible_page": 7411,
+    "declining_high_confidence": 3136,
+    "declining_and_ctr_gap": 2348
+  }
+}
