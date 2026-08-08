@@ -185,11 +185,14 @@
       Which pages should a content team look at first when they can only review a handful this week?
       This paper scores 30,000 pages for decline risk using a Random Forest classifier trained on
       observable 90-day performance and content signals, validated against a hand-written CTR-gap
-      baseline. A plain random train/test split suggested a large model advantage, Precision@50 of 0.88
-      versus the baseline's 0.52, but a client-grouped split, the honest test for a model meant to
-      generalize to pages it hasn't seen, cut that advantage down to a measured 0.761 with real
-      variance across which clients land in the test set. The model still clearly beats the baseline,
-      just by less, and with more honestly reported uncertainty, than the first number implied.
+      baseline and against the dataset's own base rate. A plain random train/test split suggested a
+      large model advantage, Precision@50 of 0.88 against a 54.2% base rate, but a client-grouped
+      split, the honest test for a model meant to generalize to pages it hasn't seen, cut that
+      advantage to a measured 0.761 with real variance across which clients land in the test set.
+      The hand-written baseline, it turns out, performs at or slightly below the base rate on this
+      specific metric, so the model's real, defensible advantage is its lift over base rate, +0.219
+      on average under the honest split, smaller than the first number implied, and reported here
+      with its uncertainty attached.
     </p>
     <div class="byline">By Muhammad Zohaib &middot; <a href="https://www.linkedin.com/in/zohaib-mzg/" target="_blank" rel="noopener">LinkedIn</a></div>
     <div class="byline" style="margin-top:6px;">Machine Learning Track &middot; Refresh / Content Opportunity Scoring lane</div>
@@ -297,13 +300,13 @@
     </p>
     <div class="headline-result">
       <div class="hr-item">
-        <div class="hr-label">Random split (optimistic)</div>
-        <div class="hr-value">0.88</div>
+        <div class="hr-label">Random split, model lift over base rate</div>
+        <div class="hr-value">+0.338</div>
       </div>
       <div class="hr-arrow">&rarr;</div>
       <div class="hr-item">
-        <div class="hr-label">Client-grouped split (honest)</div>
-        <div class="hr-value decline">0.761 <span class="hr-pm">&plusmn; 0.147</span></div>
+        <div class="hr-label">Client-grouped split, honest lift over base rate</div>
+        <div class="hr-value decline">+0.219 <span class="hr-pm">&plusmn; 0.147</span></div>
       </div>
     </div>
     <figure>
@@ -311,10 +314,24 @@
       <figcaption>Figure 1. Precision@50, baseline vs model, before and after an honest split. Error bar shows &plusmn;1 standard deviation across 20 client-grouped splits.</figcaption>
     </figure>
     <table>
-      <tr><th>Split</th><th>Baseline P@50</th><th>Model P@50</th></tr>
-      <tr><td class="prose">Random (single split)</td><td>0.520</td><td>0.880</td></tr>
-      <tr><td class="prose">Client-grouped (20-split mean)</td><td>0.531</td><td>0.761 &plusmn; 0.147</td></tr>
+      <tr><th>Split</th><th>Base rate</th><th>Baseline P@50</th><th>Model P@50</th></tr>
+      <tr><td class="prose">Random (single split)</td><td>0.542</td><td>0.520</td><td>0.880</td></tr>
+      <tr><td class="prose">Client-grouped (20-split mean)</td><td>0.542</td><td>0.531</td><td>0.761 &plusmn; 0.147</td></tr>
     </table>
+    <div class="field-note">
+      <div class="label">Correction, added after further review</div>
+      <p>
+        The baseline's Precision@50 sits at or slightly below the dataset's base rate, 54.2%
+        of pages are declining, so a ranking with no real skill would already score close to
+        this on the metric. The baseline shows effectively no measurable lift for predicting
+        decline specifically, -0.022 on the random split, -0.011 on the grouped mean. That's
+        expected, the rule was built to catch CTR opportunities, not decline, but it means the
+        model's real comparison point is the base rate, not just the baseline. Measured against
+        that, the model's lift is +0.338 on the random split and +0.219 on the honest
+        client-grouped split, still a real, measured advantage, reported plainly rather than
+        against a baseline that turned out not to be much of a competitor here.
+      </p>
+    </div>
     <div class="field-note signal">
       <div class="label">What actually changed</div>
       <p>
